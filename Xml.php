@@ -1,6 +1,7 @@
 <?php
-
 namespace xiaojun\help\xml;
+
+
 
 class Xml
 {
@@ -16,6 +17,7 @@ class Xml
      */
     public static function encode($data, $root='xml', $item='item', $attr='', $id='id', $encoding='utf-8')
     {
+        $attr['encoding'] = $encoding;
         if(is_array($attr)){
             $_attr = array();
             foreach ($attr as $key => $value) {
@@ -26,7 +28,7 @@ class Xml
         $attr   = trim($attr);
         $attr   = empty($attr) ? '' : " {$attr}";
         $xml   = "<{$root}{$attr}>";
-        $xml   .= self::data_to_xml($data, $item, $id);
+        $xml   .= self::dataToxml($data, $item, $id);
         $xml   .= "</{$root}>";
         return $xml;
     }
@@ -53,13 +55,13 @@ class Xml
      * @param mixed $data 数据
      * @return string
      */
-    public static function data_to_xml($data)
+    public static function dataToxml($data)
     {
         $xml = '';
         foreach ($data as $key => $val) {
             is_numeric($key) && $key = "item id=\"$key\"";
             $xml    .=  "<$key>";
-            $xml    .=  ( is_array($val) || is_object($val)) ? self::data_to_xml($val)  : self::xmlSafeStr($val);
+            $xml    .=  ( is_array($val) || is_object($val)) ? self::dataToxml($val)  : self::xmlSafeStr($val);
             list($key, ) = explode(' ', $key);
             $xml    .=  "</$key>";
         }

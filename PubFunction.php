@@ -1,4 +1,7 @@
 <?php
+namespace xiaojun\help;
+
+
 /**
  * 公用方法集合
  */
@@ -36,44 +39,4 @@ class PubFunction
 
     }
 
-
-    /**
-     * @param $toUser  邮件发送对象,如果是多个对象,格式为array('user1@aa.com','user2@aa.com')
-     * @param $Subject 邮件主题
-     * @param $body    邮件内容
-     * @param string $attachment   附件路径
-     * 默认使用 alert@asiainnovations.com 发送邮件
-     */
-    public static function sendMail($toUser,$Subject,$body,$attachment='',$html=false){
-        Yii::app()->mailer->Host = 'smtp.exmail.qq.com';
-        Yii::app()->mailer->IsSMTP();
-		Yii::app()->mailer->isHTML($html);
-        Yii::app()->mailer->CharSet = 'UTF-8';
-        Yii::app()->mailer->SMTPAuth = true;
-        Yii::app()->mailer->Username  = 'alert@asiainnovations.com';
-        Yii::app()->mailer->Password  = '1ddyyK03';
-        Yii::app()->mailer->From = 'alert@asiainnovations.com';
-        Yii::app()->mailer->FromName = 'Robot';
-        if(is_array($toUser)){
-            foreach($toUser as $v){
-                Yii::app()->mailer->AddAddress($v);
-            }
-        }
-        else{
-            Yii::app()->mailer->AddAddress($toUser);
-        }
-        Yii::app()->mailer->Subject = $Subject;
-        Yii::app()->mailer->Body = $body;
-        if($attachment){
-            if(is_array($attachment)){
-                foreach($attachment as $file){
-                    Yii::app()->mailer->AddAttachment($file);
-                }
-            }
-            else{
-                Yii::app()->mailer->AddAttachment($attachment);
-            }
-        }
-        Yii::app()->mailer->Send();
-    }
 }
