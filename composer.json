@@ -1,0 +1,5 @@
+{
+    "name": "xiaojun/lib",
+    "description": "php lib",
+    "minimum-stability":"dev"
+}
